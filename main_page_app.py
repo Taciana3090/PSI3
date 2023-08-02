@@ -28,4 +28,4 @@ def main_page(df):
     st.info("Para navegar, utilize o menu na barra lateral à esquerda.")
     st.write("")
 
-    st.markdown("Desenvolvido por Rafaella Moura e Taciana Vasconcelos")
+    st.markdown("Desenvolvido por Rafaella Moura e Taciana Vasconcelos") 

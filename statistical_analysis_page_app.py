@@ -22,3 +22,5 @@ def get_null_data(df):
     null_df = null_df.sort_values('N° de valores ausentes')
     null_df['Porcentagem ausente (%)'] = null_df['Porcentagem ausente (%)'].astype(str) + '%'
     return null_df
+
+
