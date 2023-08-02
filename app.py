@@ -1,25 +1,41 @@
-# importando as bibliotecas necessárias
+import streamlit as st
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import streamlit as st
-import altair as alt
-import plotly.express as px
-import plotly.graph_objects as go
-import streamlit as st
-from datetime import datetime
-import plotly.express as px
+from main_page_app import main_page
+from data_view_page_app import data_view_page
+from statistical_analysis_page_app import statistical_analysis_page
 
-@st.cache_resource
-def load_data(file_path):
-    data = pd.read_csv(file_path)
-    return data
 
-file_path = "https://github.com/Taciana3090/PSI3/raw/Taciana3090/master/data/Life%20Expectancy%20Data.csv"
-df = load_data(file_path)
+file_url = "https://github.com/Taciana3090/PSI3/raw/Taciana3090/master/data/Life%20Expectancy%20Data.csv"
+df = pd.read_csv(file_url)
 
-# Centraliza o título utilizando HTML
-st.write("<h1 style='text-align: center;'>Dashboard Life Expectancy</h1>", unsafe_allow_html=True)
-st.write("""
-Este dashboard tem como objetivo apresentar uma análise dos dados sobre o dataset Life Expectancy. 
-""")
+# padroniza o nome das colunas
+orig_cols = list(df.columns)
+new_cols = []
+for col in orig_cols:
+    new_cols.append(col.strip().replace('  ', ' ').replace(' ', '_').lower())
+
+df.columns = new_cols
+# renomeia a coluna 'thinness_1-19_years' para 'thinness_10-19_years'
+df.rename(columns={'thinness_1-19_years': 'thinness_10-19_years'}, inplace=True)
+
+# donfiguração da página 
+st.set_page_config(
+    page_title="Expectativa de vida",
+    layout="wide",
+)
+
+def main():
+    st.sidebar.empty()
+    st.sidebar.title("Menu")
+    page = st.sidebar.radio("Navegue para:", ["Página Inicial", "Visualização dos Dados", "Análise Exploratória"])
+
+    # seleciona a página do menu
+    if page == "Página Inicial":
+        main_page(df)  
+    elif page == "Visualização dos Dados":
+        data_view_page(df)  
+    else:
+        statistical_analysis_page(df)  
+
+if __name__ == "__main__":
+    main()
