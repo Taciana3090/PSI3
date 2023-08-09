@@ -20,14 +20,15 @@ df.rename(columns={'thinness_1-19_years': 'thinness_10-19_years'}, inplace=True)
 
 # donfiguração da página 
 st.set_page_config(
-    page_title="Expectativa de vida",
+    page_title="Expectativa de vida 🌎",
     layout="wide",
 )
 
 def main():
     st.sidebar.empty()
     st.sidebar.title("Menu")
-    page = st.sidebar.radio("Navegue para:", ["Página Inicial", "Visualização dos Dados", "Análise Exploratória"])
+    page = st.sidebar.radio("Navegue para:", 
+                            ["Página Inicial", "Visualização dos Dados", "Análise Exploratória"])
 
     # seleciona a página do menu
     if page == "Página Inicial":
@@ -39,4 +40,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
