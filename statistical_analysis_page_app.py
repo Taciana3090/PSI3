@@ -86,6 +86,10 @@ def statistical_analysis_page(df):
     outliers_df = pd.DataFrame({'Nome da coluna': outliers_info.keys(), 'N° de de Outliers': [t[0] for t in outliers_info.values()], 'Porcentagem outliers (%)': [f"{t[1]:.2f}%" for t in outliers_info.values()]})
     st.dataframe(outliers_df)
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 497de222b3214f116a644598e657e2dfcedc28df
 def plot_histograms(df, columns, color):
     num_rows = 2 if len(columns) > 3 else 1
     num_cols = 4 if len(columns) > 3 else len(columns)
@@ -117,3 +121,8 @@ def get_skew_kurtosis(df):
     kurtosis = df.apply(pd.Series.kurtosis)
     results_df = pd.DataFrame({'Assimetria': skewness, 'Curtose': kurtosis})
     return results_df
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 497de222b3214f116a644598e657e2dfcedc28df
