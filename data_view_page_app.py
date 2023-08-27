@@ -12,8 +12,8 @@ def data_view_page(df):
                      title='Comparação da Expectativa de Vida média entre diferentes status de países',
                      labels={'status': 'Status do País', 'life_expectancy': 'Expectativa de Vida Média'},
                      template='plotly_dark')
+    
     st.plotly_chart(fig_bar)
-
 
     # filtrando os dados pelo status e país
     status_options = df['status'].unique()
