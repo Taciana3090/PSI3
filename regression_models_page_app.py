@@ -26,6 +26,16 @@ def preprocess_data(df_final):
     X_encoded = ct.fit_transform(X)
     return X_encoded, y
 
+# Função para avaliar um modelo
+def evaluate_model(model, X_train, y_train, X_test, y_test):
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    mse = mean_squared_error(y_test, y_pred)
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = mean_squared_error(y_test, y_pred, squared=False)
+    r2 = r2_score(y_test, y_pred)
+    return mse, mae, rmse, r2
+
 # página de modelos de regressão
 def regression_models_page():
     st.title("Análise de Modelos de Regressão para Previsão da Expectativa de Vida")
@@ -57,7 +67,7 @@ def regression_models_page():
 
  
     # mostrar métricas
-    show_metrics = st.checkbox("Mostrar Métricas")
+    show_metrics = st.checkbox("Exibir Métricas de Avaliação dos Modelos")
     if show_metrics:
         available_metrics = {
         "MSE": "Mean Squared Error é a média dos erros ao quadrado entre os valores reais e previstos.",
@@ -87,7 +97,7 @@ def regression_models_page():
     if display_option == "Todos":
         plt.plot(y_pred, label='Valor Predito', marker='*')
         plt.plot(y_test.to_numpy(), label='Valor Real', marker='o')
-    else:  # "100 primeiros" é escolhido
+    else: 
         plt.plot(y_pred[:100], label='Valor Predito (100 primeiros)', marker='*')
         plt.plot(y_test[:100].to_numpy(), label='Valor Real (100 primeiros)', marker='o')
     plt.title(f'Comparação entre Valores Reais e Previstos - {selected_model}', fontsize=15)
@@ -98,8 +108,11 @@ def regression_models_page():
     st.pyplot()
 
 
+
 def main():
     regression_models_page()
 
 if __name__ == "__main__":
     main()
+
+

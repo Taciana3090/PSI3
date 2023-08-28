@@ -2,26 +2,20 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-def new_analysis_page(df):
 
-    # apenas as colunas numéricas
-    numeric_columns = df.select_dtypes(include=['float64', 'int64'])
+def new_analysis_page(df):
     st.title("Nova Análise Exploratória")
     st.write("Nesta página, você pode realizar uma análise exploratória adicional sobre a base de dados.")
-    
-    color_discrete_map = {'Desenvolvido': 'blue', 'Em Desenvolvimento': 'lightblue'} # cores consistentes para os status
-    df['status'] = df['status'].replace({'Developing': 'Em Desenvolvimento', 'Developed': 'Desenvolvido'})
-    status_counts = df['status'].value_counts().reset_index()
-    status_counts.columns = ['Status', 'Número de Países']
 
-    # gráfico 2
-    fig = px.bar(status_counts, x='Status', y='Número de Países', color='Status', title='Distribuição por Status Socioeconômico',
-                 color_discrete_map=color_discrete_map)
+    color_discrete_map = {'Desenvolvido': 'blue', 'Em Desenvolvimento': 'lightblue'}
+    df['status'] = df['status'].replace({'Developing': 'Em Desenvolvimento', 'Developed': 'Desenvolvido'})
+
+    # Contagem de países únicos por status
+    status_counts = df.drop_duplicates(subset=['country']).groupby('status').size().reset_index(name='Número de Países')
+
+    # Gráfico 1: Distribuição por Status Socioeconômico
+    fig = px.bar(status_counts, x='status', y='Número de Países', color='status', title='Distribuição por Status Socioeconômico')
     st.plotly_chart(fig)
-    fig_hd_schooling = px.scatter(df, x='schooling', y='income_composition_of_resources', color='status',
-                                  title='Relação entre Escolaridade e Índice de Desenvolvimento Humano',
-                                  color_discrete_map=color_discrete_map)
-    st.plotly_chart(fig_hd_schooling)
 
     # média de consumo de álcool entre países desenvolvidos e em desenvolvimento - gráfico 3
     avg_alcohol_by_status = df.groupby('status')['alcohol'].mean().reset_index()

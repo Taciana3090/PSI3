@@ -22,7 +22,7 @@ df.rename(columns={'thinness_1-19_years': 'thinness_10-19_years'}, inplace=True)
 
 # donfiguração da página 
 st.set_page_config(
-    page_title="Expectativa de vida 🌎 🌎",
+    page_title="Expectativa de vida 🌎",
     layout="wide",
 )
 
